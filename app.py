@@ -1,5 +1,9 @@
 from flask import Flask
+import requests
+
 from flask_restful import Api, Resource
+
+URL = "https://g6s8n9qe4g.execute-api.us-east-2.amazonaws.com/default/LambdaTest"
 
 app = Flask(__name__)
 api = Api(app)
@@ -9,15 +13,16 @@ testData = 1
 
 class HelloWorld(Resource):
     def  get(self, name , test):
-        return {"Data":"Get Hello World"}
+        payload = {"first_parameter":name,"second_parameter":test}
+        
+        r = requests.post(URL,json=payload)
+        data=r.json()
+        print(r.text)
+        return data
     
-    def post(self, name, test):
-        nameData=name
-        testData=test
-        print(nameData+" "+str(testData))
-        return {"Data": nameData,"Test":testData}
+    
 
-api.add_resource(HelloWorld,"/helloworld/<string:name>/<int:test>")
+api.add_resource(HelloWorld,"/helloworld/<int:name>/<int:test>")
 
 if __name__ == "__main__":
     app.run(debug=True)
