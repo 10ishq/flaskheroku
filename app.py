@@ -1,7 +1,6 @@
 # import main Flask class and request object
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
-from waitress import serve
 
 bodyData = {
     "Inputs": {
